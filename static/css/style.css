@@ -1,0 +1,185 @@
+/* Reset some default styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.blog-header {
+    padding: 2rem 0;
+}
+
+strong {
+    font-weight: bold;
+}
+p {
+    margin: 10px 0;
+}
+
+
+
+.header-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.slider-container {
+    display: flex;
+    justify-content: center;
+}
+
+.swiper {
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+}
+
+.swiper-slide {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.slide-content {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    width: 100%;
+}
+
+.slide-image img {
+    width: 400px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.slide-text {
+    flex-grow: 1;
+}
+
+.slide-text h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.slide-text p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .swiper-slide {
+        flex-direction: column;
+    }
+
+    .slide-image img {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .slide-text {
+        text-align: center;
+    }
+}
+/* Hover effect for the entire swiper slide */
+.swiper-slide:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Add shadow */
+}
+
+/* Hover effect for the image */
+.swiper-slide .image-container img:hover {
+    transform: scale(1.1); /* Slight zoom for the image */
+}
+
+/* Hover effect for the Read More button */
+.read-more-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    color: #ffffff;
+    text-decoration: none;
+}
+.separator {
+    border: 1px solid #dee2e6; /* Color of the line */
+    margin: 1rem 0; /* Top and bottom margins */
+}
+.uniform-image {
+    height: 300px; /* Set a fixed height */
+    width: 300px;  /* Set a fixed width */
+    object-fit: cover; /* Ensures the image fits the dimensions while maintaining aspect ratio */
+    border-radius: 10px; /* Optional: Adds rounded corners for better aesthetics */
+}
+/* styles.css */
+
+/* Ensure the card has fixed dimensions */
+.blog-card {
+    width: 300px;
+    height: 500px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Add hover effect to cards */
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the card image to fit properly */
+.blog-card .card-img-top {
+    height: 50%;
+    object-fit: cover;
+}
+
+/* Ensure the card body takes the remaining space */
+.blog-card .card-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style the "Read More" button */
+.read-more-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.read-more-btn:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .blog-card {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+    }
+
+    .blog-card .card-img-top {
+        height: 200px;
+    }
+}

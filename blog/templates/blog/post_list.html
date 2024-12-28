@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header class="blog-header">
+    <div class="container">
+        <h1 style="color: white; text-align: center;">LATEST BLOG POSTS</h1>
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                {% for category in categories %}
+                <div class="swiper-slide d-flex align-items-center">
+                    <!-- Image Container -->
+                    <div class="image-container" style="flex: 3; max-width: 400px; margin-left: 100px;">
+                        {% if category.image %}
+                            <img src="{{ category.image.url }}" alt="{{ category.name }}" 
+                                 class="img-fluid w-100 uniform-image" />
+                        {% else %}
+                            <p>No image available</p>
+                        {% endif %}
+                    </div>
+                    <!-- Content Container -->
+                    <div class="content-container" style="flex: 1; max-width: 300px; margin-left: 80px;">
+                        <h2 style="color: black; text-transform: uppercase; text-align: center;">{{ category.name }}</h2>
+                        <p style="word-spacing: 1.5px;">{{ category.description | truncatewords_html:30 }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Optional navigation -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
+</header>
+<div class="my-4">
+    <hr class="separator">
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <h1>All Posts</h1>
+    <div class="row">
+        {% for post in object_list %}
+            <div class="swiper-slide d-flex align-items-center m-3" style="transition: transform 0.3s ease;">
+                <div class="image-container" style="flex: 3; max-width: 300px; margin-left: 100px;">
+                    <img src="{{ post.post_image.url }}" alt="{{ post.title }}" class="img-fluid w-100" style="transition: transform 0.3s ease;">
+                </div>
+                <div class="content-container" style="flex: 3; max-width: 500px; margin-left: 50px;">
+                    <h2 style="color: black; text-transform: uppercase; text-align: center;">{{ post.title }}</h2>
+                    <p style="word-spacing: 1.5px;" class="text-justify">
+                        {{ post.content|truncatewords_html:25|safe }}
+                        <a href="{% url 'blog:post_detail' post.pk post.slug %}" 
+                           class="btn btn-primary read-more-btn" 
+                           style="display: block; width: fit-content; margin: 0 auto; padding: 3px 3px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; transition: background-color 0.3s ease;">
+                            Read More
+                        </a>
+                    </p>
+                    
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

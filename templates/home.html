@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="blog">
+    {% for category in categories %}
+    <div>
+        <h3>{{ category.name }}</h3>
+        <img src="{{ category.picture.url }}" alt="{{ category.name }}" style="width: 100px; height: 100px;">
+    </div>
+{% endfor %}
+
+</div>
+{% endblock %}
+
+
+

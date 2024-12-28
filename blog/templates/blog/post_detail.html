@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Breadcrumbs for Navigation -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <a href="{% url 'blog:category_data' slug=object.category.slug %}">Category</a>
+
+                    <li class="breadcrumb-item active" aria-current="page">{{ object.title }}</li>
+                </ol>
+            </nav>
+
+            <!-- Blog Title -->
+            <h1 class="display-4 mb-4">{{ object.title }}</h1>
+            
+            <!-- Author and Published Date -->
+            <p class="text-muted mb-3">
+                By <strong>{{ object.author }}</strong> | {{ object.published_date|date:"F j, Y" }}
+            </p>
+
+            <!-- Post Category (Optional) -->
+            <p class="badge bg-primary mb-4">{{ object.category.name }}</p>
+
+            <!-- Post Image -->
+            {% if object.post_image %}
+                <img src="{{ object.post_image.url }}" class="img-fluid rounded shadow-sm mb-4" alt="{{ object.title }}">
+            {% endif %}
+
+            <!-- Blog Content -->
+            <div class="content mb-4">
+                <p class="lead">{{ object.content|safe }}</p>
+            </div>
+
+            <!-- Social Share Buttons -->
+            <div class="mb-4">
+                <button class="btn btn-outline-primary me-2">Share on Facebook</button>
+                <button class="btn btn-outline-info">Share on Twitter</button>
+            </div>
+
+            <hr>
+
+            <!-- Comments Section -->
+            <div class="comments-section mt-5">
+                <h2 class="h4 mb-4">Comments</h2>
+
+                {% if comments %}
+                    <ul class="list-unstyled">
+                        {% for comment in comments %}
+                            <li class="mb-3">
+                                <div class="border p-3 rounded bg-light shadow-sm">
+                                    <strong>{{ comment.author }}</strong>
+                                    <small class="text-muted">on {{ comment.created_at|date:"F j, Y, g:i a" }}</small>
+                                    <p class="mt-2">{{ comment.content }}</p>
+                                    <a href="{% url 'comments:comment_delete' pk=comment.pk %}" class="btn btn-sm btn-danger">Delete</a>
+
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No comments yet. Be the first to comment!</p>
+                {% endif %}
+            </div>
+
+            <!-- Comment Form (Optional) -->
+            <div class="mt-5">
+                <h4 class="h5">Leave a Comment</h4>
+                <form method="POST" action="{% url 'comments:comment_add' post_id=post.pk %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <textarea class="form-control" name="content" rows="4" placeholder="Write your comment..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post Comment</button>
+                </form>
+                
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
