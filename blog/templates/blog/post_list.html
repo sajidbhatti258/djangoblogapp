@@ -2,64 +2,76 @@
 
 {% block header %}
 <header class="blog-header">
-    <div class="container">
-        <h1 style="color: white; text-align: center;">LATEST BLOG POSTS</h1>
-        <div class="swiper">
+    <div class="container text-center mt-5">
+        <div class="swiper" style="gap: 3rem;">
             <div class="swiper-wrapper">
                 {% for category in categories %}
-                <div class="swiper-slide d-flex align-items-center">
-                    <!-- Image Container -->
-                    <div class="image-container" style="flex: 3; max-width: 400px; margin-left: 100px;">
-                        {% if category.image %}
-                            <img src="{{ category.image.url }}" alt="{{ category.name }}" 
-                                 class="img-fluid w-100 uniform-image" />
-                        {% else %}
-                            <p>No image available</p>
-                        {% endif %}
-                    </div>
-                    <!-- Content Container -->
-                    <div class="content-container" style="flex: 1; max-width: 300px; margin-left: 80px;">
-                        <h2 style="color: black; text-transform: uppercase; text-align: center;">{{ category.name }}</h2>
-                        <p style="word-spacing: 1.5px;">{{ category.description | truncatewords_html:30 }}</p>
+                <div class="swiper-slide">
+                    <div class="row align-items-center">
+                        <!-- Image Section -->
+                        <div class="col-md-4 mb-3">
+                            {% if category.image %}
+                                <img 
+                                    src="{{ category.image.url }}" 
+                                    alt="{{ category.name }}" 
+                                    class="img-fluid rounded shadow">
+                            {% else %}
+                                <p class="text-white">No image available</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Content Section -->
+                        <div class="col-md-6 text-center">
+                            <a href="{% url 'blog:category_data' category.slug %}" class="text-decoration-none">
+                                <h2 class="text-uppercase text-primary">{{ category.name }}</h2>
+                            </a>
+                            <p class="text-muted d-md-none">
+                                {{ category.description|truncatewords_html:10|safe }}
+                            </p>
+                            <p class="text-muted d-none d-md-block">
+                                {{ category.description|truncatewords_html:30|safe }}
+                            </p>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-            <!-- Optional navigation -->
+
+            <!-- Swiper Navigation -->
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
         </div>
     </div>
 </header>
 <div class="my-4">
-    <hr class="separator">
+    <hr>
 </div>
-
 {% endblock %}
-
 
 {% block content %}
 <div class="container">
-    <h1>All Posts</h1>
+    <h1 class="mb-4">All Posts</h1>
     <div class="row">
         {% for post in object_list %}
-            <div class="swiper-slide d-flex align-items-center m-3" style="transition: transform 0.3s ease;">
-                <div class="image-container" style="flex: 3; max-width: 300px; margin-left: 100px;">
-                    <img src="{{ post.post_image.url }}" alt="{{ post.title }}" class="img-fluid w-100" style="transition: transform 0.3s ease;">
+        <div class="col-md-4 col-sm-6 col-12 mb-4">
+            <div class="card h-100 shadow post-card">
+                <img 
+                    src="{{ post.post_image.url }}" 
+                    alt="{{ post.title }}" 
+                    class="card-img-top img-fluid">
+                <div class="card-body">
+                    <h5 class="card-title text-center text-primary">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.content|truncatewords_html:25|safe }}</p>
                 </div>
-                <div class="content-container" style="flex: 3; max-width: 500px; margin-left: 50px;">
-                    <h2 style="color: black; text-transform: uppercase; text-align: center;">{{ post.title }}</h2>
-                    <p style="word-spacing: 1.5px;" class="text-justify">
-                        {{ post.content|truncatewords_html:25|safe }}
-                        <a href="{% url 'blog:post_detail' post.pk post.slug %}" 
-                           class="btn btn-primary read-more-btn" 
-                           style="display: block; width: fit-content; margin: 0 auto; padding: 3px 3px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; transition: background-color 0.3s ease;">
-                            Read More
-                        </a>
-                    </p>
-                    
+                <div class="card-footer text-center">
+                    <a 
+                        href="{% url 'blog:post_detail' post.pk post.slug %}" 
+                        class="btn btn-primary w-100">
+                        Read More
+                    </a>
                 </div>
             </div>
+        </div>
         {% endfor %}
     </div>
 </div>

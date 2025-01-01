@@ -13,6 +13,7 @@
                     <blockquote class="blockquote">
                         <p class="mb-0">{{ comment.content }}</p>
                     </blockquote>
+                    
                     <form method="POST" class="mt-4">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger btn-lg me-2">Delete</button>
