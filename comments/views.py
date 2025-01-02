@@ -46,10 +46,13 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
         post_slug = self.object.post.slug  # Get the related post's slug
         return reverse_lazy('blog:post_detail', kwargs={'pk': post_pk, 'slug': post_slug})
 
+from django.contrib import messages
+from django.core.exceptions import PermissionDenied
+
 class CommentDeleteView(LoginRequiredMixin, DeleteView):
     model = Comment
-    template_name = 'comment/comment_confirm_delete.html'  # Replace with your actual template
-    login_url = 'users:login'  # Redirect to login if the user is not authenticated
+    template_name = 'comment/comment_confirm_delete.html'
+    login_url = 'users:login'
 
     def get_object(self):
         # Retrieve the comment object
@@ -57,6 +60,8 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
 
         # Check if the comment belongs to the current user
         if comment.author != self.request.user:
+            # Add a permission denied message
+            messages.error(self.request, "You are not allowed to delete this comment.")
             raise PermissionDenied("You are not allowed to delete this comment.")
         
         return comment

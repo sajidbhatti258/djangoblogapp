@@ -38,12 +38,6 @@
                 {{ object.content|safe }}
             </div>
 
-            <!-- Social Share Buttons -->
-            <div class="social-share mb-4">
-                <button class="btn btn-outline-primary me-2">Share on Facebook</button>
-                <button class="btn btn-outline-info">Share on Twitter</button>
-            </div>
-
             <hr>
 
             <!-- Comments Section -->
@@ -58,7 +52,19 @@
                                     <strong>{{ comment.author }}</strong>
                                     <small class="text-muted d-block">{{ comment.created_at|date:"F j, Y, g:i a" }}</small>
                                     <p class="mt-2">{{ comment.content }}</p>
-                                    <a href="{% url 'comments:comment_delete' pk=comment.pk %}" class="btn btn-sm btn-danger">Delete</a>
+
+                                    {% if user == comment.author %}
+                                        <a href="{% url 'comments:comment_delete' pk=comment.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                                    {% endif %}
+
+                                    <!-- Display error message if user is unauthorized to delete -->
+                                    {% comment %} {% if messages %}
+                                        <div class="alert alert-danger mt-2">
+                                            {% for message in messages %}
+                                                <p>{{ message }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %} {% endcomment %}
                                 </div>
                             </li>
                         {% endfor %}

@@ -10,7 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),
     path('',include('blog.urls',namespace='blog')),
-    path('user/',include('users.urls')),
+    path('user/',include('users.urls', namespace='user')),
     path('comment/',include('comments.urls')),
 ]
 if settings.DEBUG:
